@@ -11,11 +11,12 @@ import com.example.dummykotlin.ui.adapter.ReferrerAdapter
 import com.example.dummykotlin.ui.model.GetReffereListResponse
 import com.example.dummykotlin.ui.viewmodel.ReferrerViewModel
 import com.example.dummykotlin.utils.APIResponseCallback
+import com.example.dummykotlin.utils.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
     val referrerViewModel: ReferrerViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             referrerViewModel._reffereList.collect {
                 when (it) {
                     is APIResponseCallback.Loading -> {
+                        showLoader()
                         Toast.makeText(this@MainActivity, "Loading", Toast.LENGTH_SHORT).show()
                     }
 
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     is APIResponseCallback.Success -> {
+                        dismissLoader()
                         Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
                         if (it.data.size > 0) {
                             adapterSetup(it.data)
