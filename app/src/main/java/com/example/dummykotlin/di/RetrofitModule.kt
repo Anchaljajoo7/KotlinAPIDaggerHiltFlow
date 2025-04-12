@@ -19,7 +19,7 @@ object RetrofitModule {
         .build()
 
     @Provides
-    fun provideServices(): APIInterface = Retrofit.Builder().baseUrl("").client(client)
+    fun provideServices(): APIInterface = Retrofit.Builder().baseUrl("https://niwakdocb7.execute-api.us-east-1.amazonaws.com/").client(client)
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .build().create(APIInterface::class.java)
 

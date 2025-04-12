@@ -9,7 +9,7 @@ import retrofit2.http.Url
 interface APIInterface
 {
     @POST
-    suspend fun getReffereListAPI(
+    suspend fun getList(
         @Body hashMap: HashMap<String, String>,
         @Header("Authorization") token: String,
         @Header("Origin") origin: String,
