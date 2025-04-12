@@ -1,6 +1,8 @@
 package com.example.dummykotlin.ui.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -82,5 +84,21 @@ class MainActivity : BaseActivity() {
         binding.list.layoutManager = linearLayoutManager
         val referrerAdapter: ReferrerAdapter = ReferrerAdapter(this@MainActivity, data)
         binding.list.adapter = referrerAdapter
+
+
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Filter the adapter based on user input
+                referrerAdapter.filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not needed
+            }
+        })
     }
 }
