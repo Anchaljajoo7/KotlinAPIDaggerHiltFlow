@@ -5,11 +5,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dummykotlin.databinding.ActivityMainBinding
+import com.example.dummykotlin.ui.adapter.ReferrerAdapter
+import com.example.dummykotlin.ui.model.GetReffereListResponse
 import com.example.dummykotlin.ui.viewmodel.ReferrerViewModel
 import com.example.dummykotlin.utils.APIResponseCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -53,7 +57,9 @@ class MainActivity : AppCompatActivity() {
 
                     is APIResponseCallback.Success -> {
                         Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
-
+                        if (it.data.size > 0) {
+                            adapterSetup(it.data)
+                        }
                     }
 
                     else -> {
@@ -65,5 +71,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun adapterSetup(data: GetReffereListResponse) {
+        val linearLayoutManager =
+            LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+        binding.list.layoutManager = linearLayoutManager
+        val referrerAdapter: ReferrerAdapter = ReferrerAdapter(this@MainActivity, data)
+        binding.list.adapter = referrerAdapter
     }
 }
