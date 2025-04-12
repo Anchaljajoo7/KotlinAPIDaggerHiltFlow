@@ -1,6 +1,7 @@
 package com.example.dummykotlin.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,8 @@ class ReferrerAdapter(val context: Context, val list: GetReffereListResponse) :
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        Log.d("Anchal", "onBindViewHolder: "+list.size)
         holder.binding.tvText.setText(list[position].displayname)
 
     }
